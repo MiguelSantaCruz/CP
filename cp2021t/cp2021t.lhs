@@ -1136,17 +1136,49 @@ ad_gen = undefined
 \subsection*{Problema 2}
 Definir
 \begin{code}
-loop = undefined
-inic = undefined
-prj = undefined
+loop (c,k,s) = (c*k `div` s,k+4,s+1)
+inic = (1,2,2)
+prj (c,k,s) = c 
 \end{code}
 por forma a que
 \begin{code}
-cat = prj . (for loop inic)
+cat = prj . for loop inic
 \end{code}
 seja a função pretendida.
 \textbf{NB}: usar divisão inteira.
 Apresentar de seguida a justificação da solução encontrada.
+
+\paragraph{}	
+A função pode ser definida recursivamente como se deriva a seguir:
+
+\paragraph{}
+$
+C_{n+1} = \frac{(2(n+1))!}{(n+2)! (n+1)! } \iff C_{n+1} = \frac{(2n+2)(2n+1)2n!}{(n+2)(n+1)! (n+1)n! } \iff C_{n+1} = \frac{(2n+2)(2n+1)}{(n+2)(n+1) } \times C_n \iff C_{n+1} = \frac{(2(n+1)(2n+1)}{(n+2)(n+1) } \times C_n \iff C_{n+1} = \frac{4n+2}{n+2} \times C_n
+$
+
+\paragraph{}
+A partir daqui podemos definir 3 funções: \textit{c}, \textit{k} e \textit{s} tal que:
+\paragraph{}
+
+$c \; 0 = 1$
+
+$c_{n+1} = c_n * \frac {k_n} {s_n}$
+
+\paragraph{}
+
+$k \; 0 = 2$
+
+$k_n = 4n+2 \iff k_{n+1} = 4n + 4 + 2 k_{n+1} = k_n + 4$
+
+\paragraph{}
+
+$s \; 0 = 2$
+
+$s_n = n +2 \iff s_{n+1} = n+2+1 \iff s_{n+1} = s_n + 1$
+
+\paragraph{}
+Sendo a \textit{inic} igual á inicialização das variáveis, ou seja, \textit{inic = (1,2,2)}, \textit{loop} igual ao corpo do ciclo, \textit{loop (c,k,s) = (c*k `div` s,k+4,s+1)} e \textit{prj} a função que dado um triplo devolve o primeiro elemento
+
 
 \subsection*{Problema 3}
 
