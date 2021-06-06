@@ -1177,7 +1177,7 @@ $s \; 0 = 2$
 $s_n = n +2 \iff s_{n+1} = n+2+1 \iff s_{n+1} = s_n + 1$
 
 \paragraph{}
-Sendo a \textit{inic} igual á inicialização das variáveis, ou seja, \textit{inic = (1,2,2)}, \textit{loop} igual ao corpo do ciclo, \textit{loop (c,k,s) = (c*k `div` s,k+4,s+1)} e \textit{prj} a função que dado um triplo devolve o primeiro elemento
+Sendo a \textit{inic} igual á inicialização das variáveis, ou seja, \textit{inic = (1,2,2)}, \textit{loop} igual ao corpo do ciclo, \textit{loop (c,k,s) = (c*k `div` s,k+4,s+1)} e \textit{prj} a função que dado um triplo devolve o primeiro elemento.
 
 
 \subsection*{Problema 3}
