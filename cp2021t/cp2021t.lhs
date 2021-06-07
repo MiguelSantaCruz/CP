@@ -1106,31 +1106,253 @@ Portanto:
 
 Deste modo, chegamos à expressao final de outExpAr.
 
----
+\textbf{recExpAr}
+\\
+\\
+Aplicando a regra:
+    |baseExpAr’ g f = baseExpAr id g id f f id f|
+em |recExpAr| fica:
+\begin{eqnarray}
+\start
+    |recExpAr id g = baseExpAr' id g|
+    %
+\just\equiv{equivalente}
+%
+  |recExpAr id g = baseExpAr id id id g g id g|
+\qed
+\end{eqnarray}
+Chegando a esta definição: 
 \begin{code}
-recExpAr = undefined
-\end{code}
----
-\begin{code}
-g_eval_exp = undefined
-\end{code}
----
-\begin{code}
-clean = undefined
-\end{code}
----
-\begin{code}
-gopt = undefined 
+recExpAr f =  id -|- (id -|- (id >< (f >< f) -|- id >< f))
 \end{code}
 
+\newline
+\textbf{g\_eval\_exp}
+\\
+\\
+Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catamorfismo de |eval_exp|:\\
+
+\begin{eqnarray*}
+\xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
+\centerline{\xymatrix{
+   ExpAr A \ar[d]_-{|cata g_eval_exp|}
+                \ar@@/^2pc/ [rr]^-{|out|} & \qquad \cong
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< (eval_exp >< eval_exp) + id >< eval_exp))|}
+                                     \ar@@/^2pc/ [ll]^-{|in|}
+\\
+    |a| &  & 1 + (a + ((BinOp \times (a \times a)) + UnOp \times a))\ar[ll]^-{|g_eval_exp|}
+}}
+\end{eqnarray*}
+Para descobrir o gene |g_eval_exp| temos |k = cata g_eval_exp| sabendo |k . in = g . (id + (k >< k))| .
+\\
+Portanto:
+
+\begin{eqnarray}
+\start
+|k . (either (const X) num_ops) = (either (g . i1) (g . i2 .(k >< k)))|
+%
+\just\equiv{ Eq-+ }
+%
+        |lcbr(
+		k . (const X) = g . i1
+	)(
+		k . num_ops = g . i2
+	)|
+%
+\just\equiv{ Def. num ops; Natural-id; Reflexão-+ }
+%
+        |lcbr(
+		k . (const X) = g . i1
+	)(
+		k . (either N ops) = g . i2 . (either i1 i2)
+	)|
+%
+\just\equiv{ Eq-+ (no segundo ramo) }
+%
+\left\{
+   \begin{array}{lll}
+      |k . (const X) = i1|\\
+      |k . N = g . i2 . i1|\\
+      |k . ops = g . i2 . i2|
+  \end{array}
+\right.
+%
+\just\equiv{ Def. ops }
+%
+\left\{
+   \begin{array}{llll}
+      |k . (const X) = i1|\\
+      |k . N = g . i2 . i1|\\
+      |k . (either bin (uncurry Un)) = g . i2 . i2 . (either i1 i2)|
+  \end{array}
+\right.
+%
+\just\equiv{ Eq-+ }
+%
+\left\{
+   \begin{array}{llll}
+      |k . (const X) = i1|\\
+      |k . N = g . i2 . i1|\\
+      |k . bin = g . i2 . i2 . i1|\\
+      |k . (uncurry Un) = g . i2 . i2 . i2|
+  \end{array}
+\right.
+%
+\just\equiv{ Pointwise }
+%
+\left\{
+   \begin{array}{llll}
+      |k (const X) = i1 ()|\\
+      |k (N a) = g . i2 . i1 (a)|\\
+      |k (Bin o l r) = g . i2 . i2 . i1 (o, (l, r))|\\
+      |k (Un o e) = g . i2 . i2 . i2 (o, e)|
+    \end{array}
+\right.
+\qed
+\end{eqnarray}
+
+A partir disto e com as regras da matemática pode definir-se o gene da seguinte forma: 
+\begin{code}
+g_eval_exp n (Left a) = n;
+g_eval_exp n (Right(Left(a))) = a;
+g_eval_exp n (Right(Right(Left(Product, (a,b))))) = a * b;
+g_eval_exp n (Right (Right (Left (Sum, (a,b))))) = a + b;
+g_eval_exp n (Right(Right(Right(Negate, b)))) = (-1) * b;
+g_eval_exp n (Right(Right(Right(E, b)))) = expd b;
+\end{code}
+
+\newline
+\textbf{optimize\_eval}
+\newline \newline
+Para tirar proveito dos elementos absorventes de cada operação, definimos um anamorfismo 
+que não altera a estrutura de dados o que permite que o catamorfimo permaneça igual ao definido anteriormente.
+\begin{code}
+clean (Bin Product _ (N 0)) = outExpAr $ N 0
+clean (Bin Product (N 0) _) = outExpAr $ N 0 
+clean x = outExpAr x
+---
+gopt a = g_eval_exp a 
+\end{code}
+
+\newline
+\textbf{sd\_gen}
+\\
+\\
+Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catamorfismo de |sd|:\\
+\begin{eqnarray*}
+\xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
+\centerline{\xymatrix{
+   ExpAr A \ar[d]_-{|cata sd_gene|}
+                \ar@@/^2pc/ [rr]^-{|out|} & \qquad \cong
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< (sd >< sd) + id >< sd))|}
+                                     \ar@@/^2pc/ [ll]^-{|in|}
+\\
+    |ExpAr A >< ExpAr A| &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{|sd_gen|}
+}}
+\end{eqnarray*}
+Para descobrir o gene |sd_gene| temos |k = cata sd_gene| sabendo |k . in = g . (id + (k >< k))| .
+\\
+Portanto:
+
+\begin{eqnarray}
+\start
+|k . (either (const X) num_ops) = (either (g . i1) (g . i2 .(k >< k)))|
+%
+\just\equiv{ Eq-+ }
+%
+        |lcbr(
+		k . (const X) = g . i1
+	)(
+		k . num_ops = g . i2
+	)|
+%
+\just\equiv{ Def. num ops; Natural-id; Reflexão-+ }
+%
+        |lcbr(
+		k . (const X) = g . i1
+	)(
+		k . (either N ops) = g . i2 . (either i1 i2)
+	)|
+%
+\just\equiv{ Eq-+ (no segundo ramo) }
+%
+\left\{
+   \begin{array}{lll}
+      |k . (const X) = i1|\\
+      |k . N = g . i2 . i1|\\
+      |k . ops = g . i2 . i2|
+  \end{array}
+\right.
+%
+\just\equiv{ Def. ops }
+%
+\left\{
+   \begin{array}{llll}
+      |k . (const X) = i1|\\
+      |k . N = g . i2 . i1|\\
+      |k . (either bin (uncurry Un)) = g . i2 . i2 . (either i1 i2)|
+  \end{array}
+\right.
+%
+\just\equiv{ Eq-+ }
+%
+\left\{
+   \begin{array}{llll}
+      |k . (const X) = i1|\\
+      |k . N = g . i2 . i1|\\
+      |k . bin = g . i2 . i2 . i1|\\
+      |k . (uncurry Un) = g . i2 . i2 . i2|
+  \end{array}
+\right.
+%
+\just\equiv{ Pointwise }
+%
+\left\{
+   \begin{array}{llll}
+      |k (const X) = i1 ()|\\
+      |k (N a) = g . i2 . i1 (a)|\\
+      |k (Bin o l r) = g . i2 . i2 . i1 (o, (l, r))|\\
+      |k (Un o e) = g . i2 . i2 . i2 (o, e)|
+    \end{array}
+\right.
+\qed
+\end{eqnarray}
+A partir dos cálculos e das regras da derivação é possivel chegar à seguinte definição:\\
 \begin{code}
 sd_gen :: Floating a =>
     Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
-sd_gen = undefined
-\end{code}
+sd_gen = either g1 (either g3 (either g5_sd_g g6_sd_g)) where
+    g1 _ = (X, N 1)
+    g3 a = (N a, N 0)
 
+g5_sd_g (op,((exp1,exp2),(exp3,exp4))) = if op == Sum then (Bin Sum exp1 exp3, Bin Sum exp2 exp4)
+                                              else (Bin Product exp1 exp3, Bin Sum (Bin Product exp1 exp4) (Bin Product exp2 exp3))
+g6_sd_g (op,(exp1,exp2)) = if op == Negate then (Un op exp1, Un op exp2)
+                                else (Un op exp1, Bin Product (Un op exp1) exp2)
+\end{code}
+\newline
+\textbf{ad\_gen}
+\begin{eqnarray*}
+\xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
+\centerline{\xymatrix{
+   ExpAr A \ar[d]_-{|cata ad_gen|}
+                \ar@@/^2pc/ [rr]^-{|out|} & \qquad \cong
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< (ad >< ad) + id >< ad))|}
+                                     \ar@@/^2pc/ [ll]^-{|in|}
+\\
+    |A >< A| &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{|ad_gen|}
+}}
+\end{eqnarray*}
+\newline
+Para calcular o valor da derivada de uma expressão nesse ponto, sem manipular a expressão original é necessário que o gene do catamorfismo
+crie um par com o valor original e o valor da derivada. Utilizando os cálculos anteriores e as regras matemáticas chega-se à seguinte definição:
 \begin{code}
-ad_gen = undefined
+ad_gen n (Left ()) = (n,1);
+ad_gen n (Right(Left(a))) = (a,0);
+ad_gen n (Right(Right(Left(Product, ((a,b),(c,d)) )))) = ( (a*c) , (a*d) + (b*c));
+ad_gen n (Right (Right (Left (Sum, ((a,b),(c,d)) )))) = (a + c , b + d);
+ad_gen n (Right(Right(Right(Negate, (a,b) )))) = ((-1) * (a) , (-1) * (b));
+ad_gen n (Right(Right(Right(E, (a,b) )))) = ( (expd a) , (expd a) * b );
 \end{code}
 
 \subsection*{Problema 2}
