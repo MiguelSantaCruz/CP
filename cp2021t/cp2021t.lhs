@@ -127,15 +127,15 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 999 (preencher)
+\textbf{Grupo} nr. 53
 \\\hline
 a93204 & José João Gonçalves	
 \\
-a22222 & Nome2 (preencher)	
+a93314 & Maria Sofia Rocha Gomes	
 \\
 a33333 & Nome3 (preencher)	
 \\
-a44444 & Nome4 (preencher, se aplicável, ou apagar)	
+
 \end{tabular}
 \end{center}
 
@@ -1106,9 +1106,11 @@ Portanto:
 
 Deste modo, chegamos à expressao final de outExpAr.
 
+
+\vspace{1cm}
 \textbf{recExpAr}
-\\
-\\
+
+
 Aplicando a regra:
     |baseExpAr’ g f = baseExpAr id g id f f id f|
 em |recExpAr| fica:
@@ -1126,10 +1128,9 @@ Chegando a esta definição:
 recExpAr f =  id -|- (id -|- (id >< (f >< f) -|- id >< f))
 \end{code}
 
-\newline
+\vspace{1cm}
 \textbf{g\_eval\_exp}
-\\
-\\
+
 Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catamorfismo de |eval_exp|:\\
 
 \begin{eqnarray*}
@@ -1144,7 +1145,7 @@ Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catam
 }}
 \end{eqnarray*}
 Para descobrir o gene |g_eval_exp| temos |k = cata g_eval_exp| sabendo |k . in = g . (id + (k >< k))| .
-\\
+
 Portanto:
 
 \begin{eqnarray}
@@ -1221,9 +1222,9 @@ g_eval_exp n (Right(Right(Right(Negate, b)))) = (-1) * b;
 g_eval_exp n (Right(Right(Right(E, b)))) = expd b;
 \end{code}
 
-\newline
+\vspace{1cm}
 \textbf{optimize\_eval}
-\newline \newline
+
 Para tirar proveito dos elementos absorventes de cada operação, definimos um anamorfismo 
 que não altera a estrutura de dados o que permite que o catamorfimo permaneça igual ao definido anteriormente.
 \begin{code}
@@ -1234,11 +1235,11 @@ clean x = outExpAr x
 gopt a = g_eval_exp a 
 \end{code}
 
-\newline
+\vspace{1cm}
 \textbf{sd\_gen}
-\\
-\\
-Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catamorfismo de |sd|:\\
+
+Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catamorfismo de |sd|:
+
 \begin{eqnarray*}
 \xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
 \centerline{\xymatrix{
@@ -1251,7 +1252,7 @@ Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catam
 }}
 \end{eqnarray*}
 Para descobrir o gene |sd_gene| temos |k = cata sd_gene| sabendo |k . in = g . (id + (k >< k))| .
-\\
+
 Portanto:
 
 \begin{eqnarray}
@@ -1330,8 +1331,10 @@ g5_sd_g (op,((exp1,exp2),(exp3,exp4))) = if op == Sum then (Bin Sum exp1 exp3, B
 g6_sd_g (op,(exp1,exp2)) = if op == Negate then (Un op exp1, Un op exp2)
                                 else (Un op exp1, Bin Product (Un op exp1) exp2)
 \end{code}
-\newline
+
+\vspace{20cm}
 \textbf{ad\_gen}
+
 \begin{eqnarray*}
 \xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
 \centerline{\xymatrix{
@@ -1343,9 +1346,10 @@ g6_sd_g (op,(exp1,exp2)) = if op == Negate then (Un op exp1, Un op exp2)
     |A >< A| &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{|ad_gen|}
 }}
 \end{eqnarray*}
-\newline
+
 Para calcular o valor da derivada de uma expressão nesse ponto, sem manipular a expressão original é necessário que o gene do catamorfismo
 crie um par com o valor original e o valor da derivada. Utilizando os cálculos anteriores e as regras matemáticas chega-se à seguinte definição:
+
 \begin{code}
 ad_gen n (Left ()) = (n,1);
 ad_gen n (Right(Left(a))) = (a,0);

@@ -305,15 +305,15 @@
 
 \begin{center}\large
 \begin{tabular}{ll}
-\textbf{Grupo} nr. & 999 (preencher)
+\textbf{Grupo} nr. 53
 \\\hline
 a93204 & José João Gonçalves	
 \\
-a22222 & Nome2 (preencher)	
+a93314 & Maria Sofia Rocha Gomes	
 \\
 a33333 & Nome3 (preencher)	
 \\
-a44444 & Nome4 (preencher, se aplicável, ou apagar)	
+
 \end{tabular}
 \end{center}
 
@@ -1642,9 +1642,11 @@ Portanto:
 
 Deste modo, chegamos à expressao final de outExpAr.
 
+
+\vspace{1cm}
 \textbf{recExpAr}
-\\
-\\
+
+
 Aplicando a regra:
     \ensuremath{\Varid{baseExpAr}\mathbin{’}\Varid{g}\;\Varid{f}\mathrel{=}\Varid{baseExpAr}\;\Varid{id}\;\Varid{g}\;\Varid{id}\;\Varid{f}\;\Varid{f}\;\Varid{id}\;\Varid{f}}
 em \ensuremath{\Varid{recExpAr}} fica:
@@ -1667,10 +1669,9 @@ Chegando a esta definição:
 \ColumnHook
 \end{hscode}\resethooks
 
-\newline
+\vspace{1cm}
 \textbf{g\_eval\_exp}
-\\
-\\
+
 Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguinte diagrama do catamorfismo de \ensuremath{\Varid{eval\char95 exp}}:\\
 
 \begin{eqnarray*}
@@ -1685,7 +1686,7 @@ Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguint
 }}
 \end{eqnarray*}
 Para descobrir o gene \ensuremath{\Varid{g\char95 eval\char95 exp}} temos \ensuremath{\Varid{k}\mathrel{=}\cata{\Varid{g\char95 eval\char95 exp}}} sabendo \ensuremath{\Varid{k}\comp \mathbf{in}\mathrel{=}\Varid{g}\comp (\Varid{id}\mathbin{+}(\Varid{k}\times\Varid{k}))} .
-\\
+
 Portanto:
 
 \begin{eqnarray}
@@ -1762,9 +1763,9 @@ A partir disto e com as regras da matemática pode definir-se o gene da seguinte
 \ColumnHook
 \end{hscode}\resethooks
 
-\newline
+\vspace{1cm}
 \textbf{optimize\_eval}
-\newline \newline
+
 Para tirar proveito dos elementos absorventes de cada operação, definimos um anamorfismo 
 que não altera a estrutura de dados o que permite que o catamorfimo permaneça igual ao definido anteriormente.
 \begin{hscode}\SaveRestoreHook
@@ -1782,11 +1783,11 @@ que não altera a estrutura de dados o que permite que o catamorfimo permaneça 
 \ColumnHook
 \end{hscode}\resethooks
 
-\newline
+\vspace{1cm}
 \textbf{sd\_gen}
-\\
-\\
-Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguinte diagrama do catamorfismo de \ensuremath{\Varid{sd}}:\\
+
+Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguinte diagrama do catamorfismo de \ensuremath{\Varid{sd}}:
+
 \begin{eqnarray*}
 \xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
 \centerline{\xymatrix{
@@ -1799,7 +1800,7 @@ Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguint
 }}
 \end{eqnarray*}
 Para descobrir o gene \ensuremath{\Varid{sd\char95 gene}} temos \ensuremath{\Varid{k}\mathrel{=}\cata{\Varid{sd\char95 gene}}} sabendo \ensuremath{\Varid{k}\comp \mathbf{in}\mathrel{=}\Varid{g}\comp (\Varid{id}\mathbin{+}(\Varid{k}\times\Varid{k}))} .
-\\
+
 Portanto:
 
 \begin{eqnarray}
@@ -1888,8 +1889,10 @@ A partir dos cálculos e das regras da derivação é possivel chegar à seguint
 \>[33]{}\mathbf{else}\;(\Conid{Un}\;\Varid{op}\;\Varid{exp1},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Varid{op}\;\Varid{exp1})\;\Varid{exp2}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-\newline
+
+\vspace{20cm}
 \textbf{ad\_gen}
+
 \begin{eqnarray*}
 \xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
 \centerline{\xymatrix{
@@ -1901,9 +1904,10 @@ A partir dos cálculos e das regras da derivação é possivel chegar à seguint
     \ensuremath{\Conid{A}\times\Conid{A}} &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{\ensuremath{\Varid{ad\char95 gen}}}
 }}
 \end{eqnarray*}
-\newline
+
 Para calcular o valor da derivada de uma expressão nesse ponto, sem manipular a expressão original é necessário que o gene do catamorfismo
 crie um par com o valor original e o valor da derivada. Utilizando os cálculos anteriores e as regras matemáticas chega-se à seguinte definição:
+
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
