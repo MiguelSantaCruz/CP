@@ -1220,6 +1220,8 @@ g_eval_exp n (Right(Right(Left(Product, (a,b))))) = a * b;
 g_eval_exp n (Right (Right (Left (Sum, (a,b))))) = a + b;
 g_eval_exp n (Right(Right(Right(Negate, b)))) = (-1) * b;
 g_eval_exp n (Right(Right(Right(E, b)))) = expd b;
+
+
 \end{code}
 
 \vspace{1cm}
@@ -1231,6 +1233,7 @@ que não altera a estrutura de dados o que permite que o catamorfimo permaneça 
 clean (Bin Product _ (N 0)) = outExpAr $ N 0
 clean (Bin Product (N 0) _) = outExpAr $ N 0 
 clean x = outExpAr x
+
 ---
 gopt a = g_eval_exp a 
 \end{code}
@@ -1322,14 +1325,13 @@ A partir dos cálculos e das regras da derivação é possivel chegar à seguint
 \begin{code}
 sd_gen :: Floating a =>
     Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
-sd_gen = either g1 (either g3 (either g5_sd_g g6_sd_g)) where
-    g1 _ = (X, N 1)
-    g3 a = (N a, N 0)
+sd_gen (Left ())= (X,N 1)
+sd_gen (Right (Left a))= (N a,N 0)
+sd_gen (Right (Right (Left (Sum, ((a,b),(c,d)))))) = (Bin Sum a c,Bin Sum b d)
+sd_gen (Right (Right (Left (Product, ((a,b),(c,d))))))= (Bin Product a c,Bin Sum (Bin Product a d) (Bin Product b c))
+sd_gen (Right (Right (Right (Negate, (a,b)))))= (Un Negate a,Un Negate b)
+sd_gen (Right (Right (Right (E, (a,b)))))= (Un E a,Bin Product (Un E a) b)
 
-g5_sd_g (op,((exp1,exp2),(exp3,exp4))) = if op == Sum then (Bin Sum exp1 exp3, Bin Sum exp2 exp4)
-                                              else (Bin Product exp1 exp3, Bin Sum (Bin Product exp1 exp4) (Bin Product exp2 exp3))
-g6_sd_g (op,(exp1,exp2)) = if op == Negate then (Un op exp1, Un op exp2)
-                                else (Un op exp1, Bin Product (Un op exp1) exp2)
 \end{code}
 
 \vspace{20cm}

@@ -1776,7 +1776,7 @@ que não altera a estrutura de dados o que permite que o catamorfimo permaneça 
 \>[B]{}\Varid{clean}\;(\Conid{Bin}\;\Conid{Product}\;(\Conid{N}\;\mathrm{0})\;\anonymous )\mathrel{=}\Varid{outExpAr}\mathbin{\$}\Conid{N}\;\mathrm{0}{}\<[E]%
 \\
 \>[B]{}\Varid{clean}\;\Varid{x}\mathrel{=}\Varid{outExpAr}\;\Varid{x}{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\mbox{\onelinecomment }{}\<[E]%
 \\
 \>[B]{}\Varid{gopt}\;\Varid{a}\mathrel{=}\Varid{g\char95 eval\char95 exp}\;\Varid{a}{}\<[E]%
@@ -1862,31 +1862,23 @@ A partir dos cálculos e das regras da derivação é possivel chegar à seguint
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{sd\char95 gen}\mathbin{::}\Conid{Floating}\;\Varid{a}\Rightarrow {}\<[E]%
 \\
 \>[B]{}\hsindent{5}{}\<[5]%
 \>[5]{}()+(\Varid{a}+((\Conid{BinOp},((\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}),(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a})))+(\Conid{UnOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}))))\to (\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}){}\<[E]%
 \\
-\>[B]{}\Varid{sd\char95 gen}\mathrel{=}\alt{\Varid{g1}}{\alt{\Varid{g3}}{\alt{\Varid{g5\char95 sd\char95 g}}{\Varid{g6\char95 sd\char95 g}}}}\;\mathbf{where}{}\<[E]%
+\>[B]{}\Varid{sd\char95 gen}\;(i_1\;())\mathrel{=}(\Conid{X},\Conid{N}\;\mathrm{1}){}\<[E]%
 \\
-\>[B]{}\hsindent{5}{}\<[5]%
-\>[5]{}\Varid{g1}\;\anonymous \mathrel{=}(\Conid{X},\Conid{N}\;\mathrm{1}){}\<[E]%
+\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_1\;\Varid{a}))\mathrel{=}(\Conid{N}\;\Varid{a},\Conid{N}\;\mathrm{0}){}\<[E]%
 \\
-\>[B]{}\hsindent{5}{}\<[5]%
-\>[5]{}\Varid{g3}\;\Varid{a}\mathrel{=}(\Conid{N}\;\Varid{a},\Conid{N}\;\mathrm{0}){}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\Varid{g5\char95 sd\char95 g}\;(\Varid{op},((\Varid{exp1},\Varid{exp2}),(\Varid{exp3},\Varid{exp4})))\mathrel{=}\mathbf{if}\;\Varid{op}\equiv \Conid{Sum}\;\mathbf{then}\;(\Conid{Bin}\;\Conid{Sum}\;\Varid{exp1}\;\Varid{exp3},\Conid{Bin}\;\Conid{Sum}\;\Varid{exp2}\;\Varid{exp4}){}\<[E]%
+\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_2\;(i_1\;(\Conid{Sum},((\Varid{a},\Varid{b}),(\Varid{c},\Varid{d}))))))\mathrel{=}(\Conid{Bin}\;\Conid{Sum}\;\Varid{a}\;\Varid{c},\Conid{Bin}\;\Conid{Sum}\;\Varid{b}\;\Varid{d}){}\<[E]%
 \\
-\>[B]{}\hsindent{47}{}\<[47]%
-\>[47]{}\mathbf{else}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp1}\;\Varid{exp3},\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp1}\;\Varid{exp4})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp2}\;\Varid{exp3})){}\<[E]%
+\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_2\;(i_1\;(\Conid{Product},((\Varid{a},\Varid{b}),(\Varid{c},\Varid{d}))))))\mathrel{=}(\Conid{Bin}\;\Conid{Product}\;\Varid{a}\;\Varid{c},\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{a}\;\Varid{d})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{b}\;\Varid{c})){}\<[E]%
 \\
-\>[B]{}\Varid{g6\char95 sd\char95 g}\;(\Varid{op},(\Varid{exp1},\Varid{exp2}))\mathrel{=}\mathbf{if}\;\Varid{op}\equiv \Conid{Negate}\;\mathbf{then}\;(\Conid{Un}\;\Varid{op}\;\Varid{exp1},\Conid{Un}\;\Varid{op}\;\Varid{exp2}){}\<[E]%
+\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_2\;(i_2\;(\Conid{Negate},(\Varid{a},\Varid{b})))))\mathrel{=}(\Conid{Un}\;\Conid{Negate}\;\Varid{a},\Conid{Un}\;\Conid{Negate}\;\Varid{b}){}\<[E]%
 \\
-\>[B]{}\hsindent{33}{}\<[33]%
-\>[33]{}\mathbf{else}\;(\Conid{Un}\;\Varid{op}\;\Varid{exp1},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Varid{op}\;\Varid{exp1})\;\Varid{exp2}){}\<[E]%
+\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_2\;(i_2\;(\Conid{E},(\Varid{a},\Varid{b})))))\mathrel{=}(\Conid{Un}\;\Conid{E}\;\Varid{a},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Conid{E}\;\Varid{a})\;\Varid{b}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
