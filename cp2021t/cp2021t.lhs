@@ -1234,7 +1234,7 @@ clean (Bin Product _ (N 0)) = outExpAr $ N 0
 clean (Bin Product (N 0) _) = outExpAr $ N 0 
 clean x = outExpAr x
 
----
+
 gopt a = g_eval_exp a 
 \end{code}
 
@@ -1321,7 +1321,7 @@ Portanto:
 \right.
 \qed
 \end{eqnarray}
-A partir dos cálculos e das regras da derivação é possivel chegar à seguinte definição:\\
+A partir dos cálculos e das regras de derivação é possivel chegar à seguinte definição:\\
 \begin{code}
 sd_gen :: Floating a =>
     Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
@@ -1350,7 +1350,7 @@ sd_gen (Right (Right (Right (E, (a,b)))))= (Un E a,Bin Product (Un E a) b)
 \end{eqnarray*}
 
 Para calcular o valor da derivada de uma expressão nesse ponto, sem manipular a expressão original é necessário que o gene do catamorfismo
-crie um par com o valor original e o valor da derivada. Utilizando os cálculos anteriores e as regras matemáticas chega-se à seguinte definição:
+crie um par com o valor original e o valor da derivada. Utilizando os cálculos anteriores e as regras matemáticas chega-se à definição:
 
 \begin{code}
 ad_gen n (Left ()) = (n,1);
