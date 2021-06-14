@@ -1567,7 +1567,7 @@ Deste modo, conseguimos aplicar diretamente a Lei da Recursividade Mútua (tal c
 \end{eqnarray}
 
 Após chegar a este ponto, é possível inferir que temos que tomar |b| e |q| como pares.
-Assim, temos |b = (1,1)| e |q (h, (avg, lng)) = ((h + (avg * lng)) / (succ lng), (succ lng))|.
+Assim, temos |b = (1,0)| e |q (h, (avg, lng)) = ((h + (avg * lng)) / (succ lng), (succ lng))|.
 
 Note-se que para |q| utilizámos o cálculo da média ponderada para o primeiro elemento do par e o incremento do length para o segundo.
 
