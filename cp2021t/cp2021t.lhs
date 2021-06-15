@@ -1153,7 +1153,7 @@ g_eval_exp e = either (const e) g_eval1 where
     g_eval1 = either id g_eval2
     g_eval2 = either g_eval_exp3 g_eval_exp4
 g_eval_exp3 (a,(b,c)) = if a == Product then b * c else b + c
-g_eval_exp4 (a,b) = if a == Negate then -b else Prelude.exp b
+g_eval_exp4 (a,b) = if a == E then Prelude.exp b  else  -b
 \end{code}
 
 \vspace{1cm}
@@ -1177,7 +1177,7 @@ Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catam
 \begin{eqnarray*}
 \xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
 \centerline{\xymatrix{
-   ExpAr A \ar[d]_-{|cata sd_gene|}
+   ExpAr A \ar[d]_-{|cata sd_gen|}
                 \ar@@/^2pc/ [rr]^-{|out|} & \qquad \cong
 &   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< (sd >< sd) + id >< sd))|}
                                      \ar@@/^2pc/ [ll]^-{|in|}
@@ -1196,10 +1196,10 @@ sd_gen = either g_sd1 (either g_sd2 (either g_sd_gen4 g_sd_gen5)) where
     g_sd1 _ = (X, N 1)
     g_sd2 a = (N a, N 0)
     
-g_sd_gen4 (o,((exp1,exp2),(exp3,exp4))) = if o == Sum then (Bin Sum exp1 exp3, Bin Sum exp2 exp4)
-                                            else (Bin Product exp1 exp3, Bin Sum (Bin Product exp1 exp4) (Bin Product exp2 exp3))
-g_sd_gen5 (o,(exp1,exp2)) = if o == Negate then (Un o exp1, Un o exp2)
-                              else (Un o exp1, Bin Product (Un o exp1) exp2)
+g_sd_gen4 (o,((exp1,exp2),(exp3,exp4))) = if o == Product then (Bin Product exp1 exp3, Bin Sum (Bin Product exp1 exp4) (Bin Product exp2 exp3)) 
+                                            else (Bin Sum exp1 exp3, Bin Sum exp2 exp4)
+g_sd_gen5 (o,(exp1,exp2)) = if o == E then (Un o exp1, Bin Product (Un o exp1) exp2)
+                              else (Un o exp1, Un o exp2)
 
 \end{code}
 
@@ -1226,10 +1226,10 @@ e o valor da derivada no ponto. Utilizando o diagrama e as regras matemáticas c
 ad_gen d = either g_ad1 (either g_ad2 (either g_ad3 g_ad4)) where
     g_ad1 = const (d,1)
     g_ad2 a = (a, 0)
-g_ad3 (o,((e1,e2),(e3,e4))) = if o == Sum then (e1 + e3, e2 + e4)
-                                            else (e1*e3, e1*e4 + e2*e3)
-g_ad4 (o,(e1,e2)) = if o == Negate then (negate e1, negate e2)
-                                      else (Prelude.exp e1, (Prelude.exp e1) * e2)
+g_ad3 (o,((e1,e2),(e3,e4))) = if o == Product then (e1*e3, e1*e4 + e2*e3)
+                                            else (e1 + e3, e2 + e4)
+g_ad4 (o,(e1,e2)) = if o == E then (Prelude.exp e1, (Prelude.exp e1) * e2)
+                               else  (negate e1, negate e2)
 \end{code}
 
 \subsection*{Problema 2}

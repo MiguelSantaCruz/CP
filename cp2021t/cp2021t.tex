@@ -1692,6 +1692,9 @@ Portanto:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{51}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{57}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{57E}{@{}l@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{e}\mathrel{=}\alt{\underline{\Varid{e}}}{\Varid{g\char95 eval1}}\;\mathbf{where}{}\<[E]%
 \\
@@ -1703,7 +1706,9 @@ Portanto:
 \\
 \>[B]{}\Varid{g\char95 eval\char95 exp3}\;(\Varid{a},(\Varid{b},\Varid{c}))\mathrel{=}\mathbf{if}\;\Varid{a}\equiv \Conid{Product}\;\mathbf{then}\;\Varid{b}\mathbin{*}\Varid{c}\;\mathbf{else}\;\Varid{b}\mathbin{+}\Varid{c}{}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 eval\char95 exp4}\;(\Varid{a},\Varid{b})\mathrel{=}\mathbf{if}\;\Varid{a}\equiv \Conid{Negate}\;\mathbf{then}\mathbin{-}\Varid{b}\;\mathbf{else}\;\Varid{\Conid{Prelude}.exp}\;\Varid{b}{}\<[E]%
+\>[B]{}\Varid{g\char95 eval\char95 exp4}\;(\Varid{a},\Varid{b})\mathrel{=}\mathbf{if}\;\Varid{a}\equiv \Conid{E}\;\mathbf{then}\;\Varid{\Conid{Prelude}.exp}\;\Varid{b}\;{}\<[51]%
+\>[51]{}\mathbf{else}{}\<[57]%
+\>[57]{}\mathbin{-}\Varid{b}{}\<[57E]%
 \ColumnHook
 \end{hscode}\resethooks
 
@@ -1733,7 +1738,7 @@ Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguint
 \begin{eqnarray*}
 \xymatrixcolsep{0.5pc}\xymatrixrowsep{5pc}
 \centerline{\xymatrix{
-   ExpAr A \ar[d]_-{\ensuremath{\cata{\Varid{sd\char95 gene}}}}
+   ExpAr A \ar[d]_-{\ensuremath{\cata{\Varid{sd\char95 gen}}}}
                 \ar@/^2pc/ [rr]^-{\ensuremath{\Varid{out}}} & \qquad \cong
 &   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{sd}\times\Varid{sd})\mathbin{+}\Varid{id}\times\Varid{sd}))}}
                                      \ar@/^2pc/ [ll]^-{\ensuremath{\mathbf{in}}}
@@ -1764,15 +1769,15 @@ Portanto:
 \>[B]{}\hsindent{5}{}\<[5]%
 \>[5]{}\Varid{g\char95 sd2}\;\Varid{a}\mathrel{=}(\Conid{N}\;\Varid{a},\Conid{N}\;\mathrm{0}){}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\Varid{g\char95 sd\char95 gen4}\;(\Varid{o},((\Varid{exp1},\Varid{exp2}),(\Varid{exp3},\Varid{exp4})))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Sum}\;\mathbf{then}\;(\Conid{Bin}\;\Conid{Sum}\;\Varid{exp1}\;\Varid{exp3},\Conid{Bin}\;\Conid{Sum}\;\Varid{exp2}\;\Varid{exp4}){}\<[E]%
+\>[B]{}\Varid{g\char95 sd\char95 gen4}\;(\Varid{o},((\Varid{exp1},\Varid{exp2}),(\Varid{exp3},\Varid{exp4})))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Product}\;\mathbf{then}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp1}\;\Varid{exp3},\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp1}\;\Varid{exp4})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp2}\;\Varid{exp3})){}\<[E]%
 \\
 \>[B]{}\hsindent{45}{}\<[45]%
-\>[45]{}\mathbf{else}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp1}\;\Varid{exp3},\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp1}\;\Varid{exp4})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp2}\;\Varid{exp3})){}\<[E]%
+\>[45]{}\mathbf{else}\;(\Conid{Bin}\;\Conid{Sum}\;\Varid{exp1}\;\Varid{exp3},\Conid{Bin}\;\Conid{Sum}\;\Varid{exp2}\;\Varid{exp4}){}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 sd\char95 gen5}\;(\Varid{o},(\Varid{exp1},\Varid{exp2}))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Negate}\;\mathbf{then}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1},\Conid{Un}\;\Varid{o}\;\Varid{exp2}){}\<[E]%
+\>[B]{}\Varid{g\char95 sd\char95 gen5}\;(\Varid{o},(\Varid{exp1},\Varid{exp2}))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{E}\;\mathbf{then}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1})\;\Varid{exp2}){}\<[E]%
 \\
 \>[B]{}\hsindent{31}{}\<[31]%
-\>[31]{}\mathbf{else}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1})\;\Varid{exp2}){}\<[E]%
+\>[31]{}\mathbf{else}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1},\Conid{Un}\;\Varid{o}\;\Varid{exp2}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
@@ -1798,7 +1803,8 @@ e o valor da derivada no ponto. Utilizando o diagrama e as regras matemáticas c
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{45}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{ad\char95 gen}\;\Varid{d}\mathrel{=}\alt{\Varid{g\char95 ad1}}{\alt{\Varid{g\char95 ad2}}{\alt{\Varid{g\char95 ad3}}{\Varid{g\char95 ad4}}}}\;\mathbf{where}{}\<[E]%
@@ -1809,15 +1815,16 @@ e o valor da derivada no ponto. Utilizando o diagrama e as regras matemáticas c
 \>[B]{}\hsindent{5}{}\<[5]%
 \>[5]{}\Varid{g\char95 ad2}\;\Varid{a}\mathrel{=}(\Varid{a},\mathrm{0}){}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 ad3}\;(\Varid{o},((e_1 ,e_2 ),(\Varid{e3},\Varid{e4})))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Sum}\;\mathbf{then}\;(e_1 \mathbin{+}\Varid{e3},e_2 \mathbin{+}\Varid{e4}){}\<[E]%
+\>[B]{}\Varid{g\char95 ad3}\;(\Varid{o},((e_1 ,e_2 ),(\Varid{e3},\Varid{e4})))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Product}\;\mathbf{then}\;(e_1 \mathbin{*}\Varid{e3},e_1 \mathbin{*}\Varid{e4}\mathbin{+}e_2 \mathbin{*}\Varid{e3}){}\<[E]%
 \\
 \>[B]{}\hsindent{45}{}\<[45]%
-\>[45]{}\mathbf{else}\;(e_1 \mathbin{*}\Varid{e3},e_1 \mathbin{*}\Varid{e4}\mathbin{+}e_2 \mathbin{*}\Varid{e3}){}\<[E]%
+\>[45]{}\mathbf{else}\;(e_1 \mathbin{+}\Varid{e3},e_2 \mathbin{+}\Varid{e4}){}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 ad4}\;(\Varid{o},(e_1 ,e_2 ))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Negate}\;\mathbf{then}\;(\Varid{negate}\;e_1 ,\Varid{negate}\;e_2 ){}\<[E]%
+\>[B]{}\Varid{g\char95 ad4}\;(\Varid{o},(e_1 ,e_2 ))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{E}\;\mathbf{then}\;(\Varid{\Conid{Prelude}.exp}\;e_1 ,(\Varid{\Conid{Prelude}.exp}\;e_1 )\mathbin{*}e_2 ){}\<[E]%
 \\
-\>[B]{}\hsindent{39}{}\<[39]%
-\>[39]{}\mathbf{else}\;(\Varid{\Conid{Prelude}.exp}\;e_1 ,(\Varid{\Conid{Prelude}.exp}\;e_1 )\mathbin{*}e_2 ){}\<[E]%
+\>[B]{}\hsindent{32}{}\<[32]%
+\>[32]{}\mathbf{else}\;{}\<[38]%
+\>[38]{}(\Varid{negate}\;e_1 ,\Varid{negate}\;e_2 ){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
