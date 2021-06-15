@@ -1303,7 +1303,7 @@ se apresenta em seguida:
 \end{eqnarray*}
 
 
-Deste modo, tendo assim o diagrama, sabendo que calcLine é um catamorfimo de um either, temos que o seu gene é |g = either g1 g2|.
+Deste modo, tendo o diagrama e sabendo que calcLine é um catamorfimo de um either, temos que o seu gene é |g = either g1 g2|.
 Para g1, através da ajuda do ghci, determinamos que é do tipo |[Rational] -> Float -> [Rational]| e sabemos que para este caso
 o resultado será uma lista vazia. Podemos então inferir que para quaisquer que sejam os dois argumentos, o resultado será sempre
 o mesmo: |g1 _ _ = nil|.
