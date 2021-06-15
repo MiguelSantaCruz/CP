@@ -1312,19 +1312,24 @@ Para g2, através do código fornecido nos anexos, reparamos que num trecho da f
 se adequa ao caso do g2, sendo que temos um par que vai para o mesmo tipo do resultado deste catamorfismo: 
 |(Rational, NPoint -> OverTime NPoint) -> (NPoint -> OverTime NPoint)|.
 Assim, recorremos a esta função para calcular g2, obtendo assim o segundo elemento do either que compõe o catamorfismo.
-
-
+\\
+\\
+\textbf{calcLine}
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where
    h = either g1 g2
 g1 _ _ = nil
+
+----
+
 g2 (d,f) l = case l of
        []     -> nil
        (x:xs) -> \z -> concat $ (sequenceA [singl . linear1d d x, f xs]) z
-
-
-
+\end{code}
+\\
+\textbf{deCasteljau}
+\begin{code}
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg coalg where
    coalg = undefined

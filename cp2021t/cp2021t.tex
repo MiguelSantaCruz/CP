@@ -1916,8 +1916,9 @@ Para g2, através do código fornecido nos anexos, reparamos que num trecho da f
 se adequa ao caso do g2, sendo que temos um par que vai para o mesmo tipo do resultado deste catamorfismo: 
 \ensuremath{(\Q ,\Conid{NPoint}\to \Conid{OverTime}\;\Conid{NPoint})\to (\Conid{NPoint}\to \Conid{OverTime}\;\Conid{NPoint})}.
 Assim, recorremos a esta função para calcular g2, obtendo assim o segundo elemento do either que compõe o catamorfismo.
-
-
+\\
+\\
+\textbf{calcLine}
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1932,7 +1933,9 @@ Assim, recorremos a esta função para calcular g2, obtendo assim o segundo elem
 \>[4]{}\Varid{h}\mathrel{=}\alt{\Varid{g1}}{\Varid{g2}}{}\<[E]%
 \\
 \>[B]{}\Varid{g1}\;\anonymous \;\anonymous \mathrel{=}\Varid{nil}{}\<[E]%
-\\
+\\[\blanklineskip]%
+\>[B]{}\mbox{\onelinecomment }{}\<[E]%
+\\[\blanklineskip]%
 \>[B]{}\Varid{g2}\;(\Varid{d},\Varid{f})\;\Varid{l}\mathrel{=}\mathbf{case}\;\Varid{l}\;\mathbf{of}{}\<[E]%
 \\
 \>[B]{}\hsindent{8}{}\<[8]%
@@ -1941,7 +1944,14 @@ Assim, recorremos a esta função para calcular g2, obtendo assim o segundo elem
 \\
 \>[B]{}\hsindent{8}{}\<[8]%
 \>[8]{}(\Varid{x}\mathbin{:}\Varid{xs})\to \lambda \Varid{z}\to \Varid{concat}\mathbin{\$}(\Varid{sequenceA}\;[\mskip1.5mu \Varid{singl}\comp \Varid{linear1d}\;\Varid{d}\;\Varid{x},\Varid{f}\;\Varid{xs}\mskip1.5mu])\;\Varid{z}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+\\
+\textbf{deCasteljau}
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{deCasteljau}\mathbin{::}[\mskip1.5mu \Conid{NPoint}\mskip1.5mu]\to \Conid{OverTime}\;\Conid{NPoint}{}\<[E]%
 \\
 \>[B]{}\Varid{deCasteljau}\mathrel{=}\Varid{hyloAlgForm}\;\Varid{alg}\;\Varid{coalg}\;\mathbf{where}{}\<[E]%
