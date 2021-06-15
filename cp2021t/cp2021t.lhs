@@ -1305,7 +1305,7 @@ se apresenta em seguida:
 
 Deste modo, tendo o diagrama e sabendo que calcLine é um catamorfimo de um either, temos que o seu gene é |g = either g1 g2|.
 Para g1, através da ajuda do ghci, determinamos que é do tipo |[Rational] -> Float -> [Rational]| e sabemos que para este caso
-o resultado será uma lista vazia. Podemos então inferir que para quaisquer que sejam os dois argumentos, o resultado será sempre
+o resultado será sempre uma lista vazia. Podemos então inferir que para quaisquer que sejam os dois argumentos, o resultado será sempre
 o mesmo: |g1 _ _ = nil|.
 
 Para g2, através do código fornecido nos anexos, reparamos que num trecho da função auxiliar é-nos fornecida uma função que
