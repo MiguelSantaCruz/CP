@@ -1280,7 +1280,8 @@ Sendo a \textit{inic} igual á inicialização das variáveis, ou seja, \textit{
 
 
 \subsection*{Problema 3}
-
+\\
+\textbf{calcLine}
 \paragraph{}
 Para este exercicio, começamos por desenhar o diagrama que representa este catamorfismo, pelo que
 se apresenta em seguida:
@@ -1304,25 +1305,25 @@ se apresenta em seguida:
 
 
 Deste modo, tendo o diagrama e sabendo que calcLine é um catamorfimo de um either, temos que o seu gene é |g = either g1 g2|.
+\\
+\\
 Para g1, através da ajuda do ghci, determinamos que é do tipo |[Rational] -> Float -> [Rational]| e sabemos que para este caso
 o resultado será sempre uma lista vazia. Podemos então inferir que para quaisquer que sejam os dois argumentos, o resultado será sempre
 o mesmo: |g1 _ _ = nil|.
-
+\\
+\\
 Para g2, através do código fornecido nos anexos, reparamos que num trecho da função auxiliar é-nos fornecida uma função que
 se adequa ao caso do g2, sendo que temos um par que vai para o mesmo tipo do resultado deste catamorfismo: 
 |(Rational, NPoint -> OverTime NPoint) -> (NPoint -> OverTime NPoint)|.
 Assim, recorremos a esta função para calcular g2, obtendo assim o segundo elemento do either que compõe o catamorfismo.
 \\
 \\
-\textbf{calcLine}
+
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where
    h = either g1 g2
 g1 _ _ = nil
-
-----
-
 g2 (d,f) l = case l of
        []     -> nil
        (x:xs) -> \z -> concat $ (sequenceA [singl . linear1d d x, f xs]) z
