@@ -1281,10 +1281,47 @@ Sendo a \textit{inic} igual á inicialização das variáveis, ou seja, \textit{
 
 \subsection*{Problema 3}
 
+\paragraph{}
+Para este exercicio, começamos por desenhar o diagrama que representa este catamorfismo, pelo que
+se apresenta em seguida:
+
+
+\begin{eqnarray*}
+\xymatrix@@C=2cm{
+    |NPoint|
+           \ar[d]_-{|cata g = calcLine|}
+&
+    |1 + Q >< NPoint|
+           \ar[d]^{|id + id >< calcLine|}
+           \ar[l]_-{|in|}
+\\
+     |NPoint -> (OverTime NPoint)|
+&
+     |1 + Q >< (NPoint -> OverTime NPoint)|
+           \ar[l]^-{|g|}
+}
+\end{eqnarray*}
+
+
+Deste modo, tendo assim o diagrama, sabendo que calcLine é um catamorfimo de um either, temos que o seu gene é |g = either g1 g2|.
+Para g1, através da ajuda do ghci, determinamos que é do tipo |[Rational] -> Float -> [Rational]| e sabemos que para este caso
+o resultado será uma lista vazia. Podemos então inferir que para quaisquer que sejam os dois argumentos, o resultado será sempre
+o mesmo: |g1 _ _ = nil|.
+
+Para g2, através do código fornecido nos anexos, reparamos que num trecho da função auxiliar é-nos fornecida uma função que
+se adequa ao caso do g2, sendo que temos um par que vai para o mesmo tipo do resultado deste catamorfismo: 
+|(Rational, NPoint -> OverTime NPoint) -> (NPoint -> OverTime NPoint)|.
+Assim, recorremos a esta função para calcular g2, obtendo assim o segundo elemento do either que compõe o catamorfismo.
+
+
 \begin{code}
 calcLine :: NPoint -> (NPoint -> OverTime NPoint)
 calcLine = cataList h where
-   h = undefined
+   h = either g1 g2
+g1 _ _ = nil
+g2 (d,f) l = case l of
+       []     -> nil
+       (x:xs) -> \z -> concat $ (sequenceA [singl . linear1d d x, f xs]) z
 
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg coalg where
@@ -1325,7 +1362,7 @@ O diagrama correspondente a este exercício traduz-se no seguinte:
 \\
      |A >< N|
 &
-     |A + A x (N >< N)|
+     |A + A >< (N >< N)|
            \ar[l]^-{|g|}
 }
 \end{eqnarray*}
@@ -1473,7 +1510,7 @@ O diagrama correspondente a este exercício traduz-se no seguinte:
            \ar[d]^{|id + (cataLTree g) >< (cataLTree g)|}
            \ar[l]_-{|in|}
 \\
-     |A >< Nat|
+     |A >< N|
 &
      |A + (A >< N) x (A >< N)|
            \ar[l]^-{|g|}
