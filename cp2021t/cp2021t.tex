@@ -307,11 +307,11 @@
 \begin{tabular}{ll}
 \textbf{Grupo} nr. 53
 \\\hline
-a93204 & José João Gonçalves	
+93204 & José João Gonçalves	
 \\
-a93314 & Maria Sofia Rocha Gomes	
+93314 & Maria Sofia Rocha Gomes	
 \\
-a93194 & Miguel Rodrigues Santa Cruz	
+93194 & Miguel Rodrigues Santa Cruz	
 \\
 
 \end{tabular}
@@ -1685,89 +1685,33 @@ Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguint
     \ensuremath{\Varid{a}} &  & 1 + (a + ((BinOp \times (a \times a)) + UnOp \times a))\ar[ll]^-{\ensuremath{\Varid{g\char95 eval\char95 exp}}}
 }}
 \end{eqnarray*}
-Para descobrir o gene \ensuremath{\Varid{g\char95 eval\char95 exp}} temos \ensuremath{\Varid{k}\mathrel{=}\cata{\Varid{g\char95 eval\char95 exp}}} sabendo \ensuremath{\Varid{k}\comp \mathbf{in}\mathrel{=}\Varid{g}\comp (\Varid{id}\mathbin{+}(\Varid{k}\times\Varid{k}))} .
+Para descobrir o gene \ensuremath{\Varid{g\char95 eval\char95 exp}} usamos o seu tipo e as regras matemáticas.
 
 Portanto:
 
-\begin{eqnarray}
-\start
-\ensuremath{\Varid{k}\comp \alt{\underline{\Conid{X}}}{\Varid{num\char95 ops}}\mathrel{=}\alt{\Varid{g}\comp i_1}{\Varid{g}\comp i_2\comp (\Varid{k}\times\Varid{k})}}
-%
-\just\equiv{ Eq-+ }
-%
-        \ensuremath{\begin{lcbr}\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}\Varid{g}\comp i_1\\\Varid{k}\comp \Varid{num\char95 ops}\mathrel{=}\Varid{g}\comp i_2\end{lcbr}}
-%
-\just\equiv{ Def. num ops; Natural-id; Reflexão-+ }
-%
-        \ensuremath{\begin{lcbr}\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}\Varid{g}\comp i_1\\\Varid{k}\comp \alt{\Conid{N}}{\Varid{ops}}\mathrel{=}\Varid{g}\comp i_2\comp \alt{i_1}{i_2}\end{lcbr}}
-%
-\just\equiv{ Eq-+ (no segundo ramo) }
-%
-\left\{
-   \begin{array}{lll}
-      \ensuremath{\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}i_1}\\
-      \ensuremath{\Varid{k}\comp \Conid{N}\mathrel{=}\Varid{g}\comp i_2\comp i_1}\\
-      \ensuremath{\Varid{k}\comp \Varid{ops}\mathrel{=}\Varid{g}\comp i_2\comp i_2}
-  \end{array}
-\right.
-%
-\just\equiv{ Def. ops }
-%
-\left\{
-   \begin{array}{llll}
-      \ensuremath{\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}i_1}\\
-      \ensuremath{\Varid{k}\comp \Conid{N}\mathrel{=}\Varid{g}\comp i_2\comp i_1}\\
-      \ensuremath{\Varid{k}\comp \alt{\Varid{bin}}{\uncurry{\Conid{Un}}}\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp \alt{i_1}{i_2}}
-  \end{array}
-\right.
-%
-\just\equiv{ Eq-+ }
-%
-\left\{
-   \begin{array}{llll}
-      \ensuremath{\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}i_1}\\
-      \ensuremath{\Varid{k}\comp \Conid{N}\mathrel{=}\Varid{g}\comp i_2\comp i_1}\\
-      \ensuremath{\Varid{k}\comp \Varid{bin}\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp i_1}\\
-      \ensuremath{\Varid{k}\comp \uncurry{\Conid{Un}}\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp i_2}
-  \end{array}
-\right.
-%
-\just\equiv{ Pointwise }
-%
-\left\{
-   \begin{array}{llll}
-      \ensuremath{\Varid{k}\;\underline{\Conid{X}}\mathrel{=}i_1\;()}\\
-      \ensuremath{\Varid{k}\;(\Conid{N}\;\Varid{a})\mathrel{=}\Varid{g}\comp i_2\comp i_1\;(\Varid{a})}\\
-      \ensuremath{\Varid{k}\;(\Conid{Bin}\;\Varid{o}\;\Varid{l}\;\Varid{r})\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp i_1\;(\Varid{o},(\Varid{l},\Varid{r}))}\\
-      \ensuremath{\Varid{k}\;(\Conid{Un}\;\Varid{o}\;\Varid{e})\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp i_2\;(\Varid{o},\Varid{e})}
-    \end{array}
-\right.
-\qed
-\end{eqnarray}
-
-A partir disto e com as regras da matemática pode definir-se o gene da seguinte forma: 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{n}\;(i_1\;\Varid{a})\mathrel{=}\Varid{n};{}\<[E]%
+\>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{e}\mathrel{=}\alt{\underline{\Varid{e}}}{\Varid{g\char95 eval1}}\;\mathbf{where}{}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{n}\;(i_2\;(i_1\;(\Varid{a})))\mathrel{=}\Varid{a};{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{g\char95 eval1}\mathrel{=}\alt{\Varid{id}}{\Varid{g\char95 eval2}}{}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{n}\;(i_2\;(i_2\;(i_1\;(\Conid{Product},(\Varid{a},\Varid{b})))))\mathrel{=}\Varid{a}\mathbin{*}\Varid{b};{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{g\char95 eval2}\mathrel{=}\alt{\Varid{g\char95 eval\char95 exp3}}{\Varid{g\char95 eval\char95 exp4}}{}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{n}\;(i_2\;(i_2\;(i_1\;(\Conid{Sum},(\Varid{a},\Varid{b})))))\mathrel{=}\Varid{a}\mathbin{+}\Varid{b};{}\<[E]%
+\>[B]{}\Varid{g\char95 eval\char95 exp3}\;(\Varid{a},(\Varid{b},\Varid{c}))\mathrel{=}\mathbf{if}\;\Varid{a}\equiv \Conid{Product}\;\mathbf{then}\;\Varid{b}\mathbin{*}\Varid{c}\;\mathbf{else}\;\Varid{b}\mathbin{+}\Varid{c}{}\<[E]%
 \\
-\>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{n}\;(i_2\;(i_2\;(i_2\;(\Conid{Negate},\Varid{b}))))\mathrel{=}(\mathbin{-}\mathrm{1})\mathbin{*}\Varid{b};{}\<[E]%
-\\
-\>[B]{}\Varid{g\char95 eval\char95 exp}\;\Varid{n}\;(i_2\;(i_2\;(i_2\;(\Conid{E},\Varid{b}))))\mathrel{=}\Varid{expd}\;\Varid{b};{}\<[E]%
+\>[B]{}\Varid{g\char95 eval\char95 exp4}\;(\Varid{a},\Varid{b})\mathrel{=}\mathbf{if}\;\Varid{a}\equiv \Conid{Negate}\;\mathbf{then}\mathbin{-}\Varid{b}\;\mathbf{else}\;\Varid{\Conid{Prelude}.exp}\;\Varid{b}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
 \vspace{1cm}
 \textbf{optimize\_eval}
 
-Para tirar proveito dos elementos absorventes de cada operação, definimos um anamorfismo 
-que não altera a estrutura de dados o que permite que o catamorfimo permaneça igual ao definido anteriormente.
+Para tirar proveito dos elementos absorventes de cada operação, definimos um hilomorfismo
+onde o anamorfismo não altera a estrutura de dados o que permite que o catamorfimo permaneça igual ao gene \ensuremath{\Varid{g\char95 eval\char95 exp}}.
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1797,86 +1741,38 @@ Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguint
     \ensuremath{\Conid{ExpAr}\;\Conid{A}\times\Conid{ExpAr}\;\Conid{A}} &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{\ensuremath{\Varid{sd\char95 gen}}}
 }}
 \end{eqnarray*}
-Para descobrir o gene \ensuremath{\Varid{sd\char95 gene}} temos \ensuremath{\Varid{k}\mathrel{=}\cata{\Varid{sd\char95 gene}}} sabendo \ensuremath{\Varid{k}\comp \mathbf{in}\mathrel{=}\Varid{g}\comp (\Varid{id}\mathbin{+}(\Varid{k}\times\Varid{k}))} .
+Para descobrir o gene \ensuremath{\Varid{sd\char95 gene}} temos de usar o seu tipo e as regras de derivação conhecidas.
 
 Portanto:
 
-\begin{eqnarray}
-\start
-\ensuremath{\Varid{k}\comp \alt{\underline{\Conid{X}}}{\Varid{num\char95 ops}}\mathrel{=}\alt{\Varid{g}\comp i_1}{\Varid{g}\comp i_2\comp (\Varid{k}\times\Varid{k})}}
-%
-\just\equiv{ Eq-+ }
-%
-        \ensuremath{\begin{lcbr}\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}\Varid{g}\comp i_1\\\Varid{k}\comp \Varid{num\char95 ops}\mathrel{=}\Varid{g}\comp i_2\end{lcbr}}
-%
-\just\equiv{ Def. num ops; Natural-id; Reflexão-+ }
-%
-        \ensuremath{\begin{lcbr}\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}\Varid{g}\comp i_1\\\Varid{k}\comp \alt{\Conid{N}}{\Varid{ops}}\mathrel{=}\Varid{g}\comp i_2\comp \alt{i_1}{i_2}\end{lcbr}}
-%
-\just\equiv{ Eq-+ (no segundo ramo) }
-%
-\left\{
-   \begin{array}{lll}
-      \ensuremath{\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}i_1}\\
-      \ensuremath{\Varid{k}\comp \Conid{N}\mathrel{=}\Varid{g}\comp i_2\comp i_1}\\
-      \ensuremath{\Varid{k}\comp \Varid{ops}\mathrel{=}\Varid{g}\comp i_2\comp i_2}
-  \end{array}
-\right.
-%
-\just\equiv{ Def. ops }
-%
-\left\{
-   \begin{array}{llll}
-      \ensuremath{\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}i_1}\\
-      \ensuremath{\Varid{k}\comp \Conid{N}\mathrel{=}\Varid{g}\comp i_2\comp i_1}\\
-      \ensuremath{\Varid{k}\comp \alt{\Varid{bin}}{\uncurry{\Conid{Un}}}\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp \alt{i_1}{i_2}}
-  \end{array}
-\right.
-%
-\just\equiv{ Eq-+ }
-%
-\left\{
-   \begin{array}{llll}
-      \ensuremath{\Varid{k}\comp \underline{\Conid{X}}\mathrel{=}i_1}\\
-      \ensuremath{\Varid{k}\comp \Conid{N}\mathrel{=}\Varid{g}\comp i_2\comp i_1}\\
-      \ensuremath{\Varid{k}\comp \Varid{bin}\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp i_1}\\
-      \ensuremath{\Varid{k}\comp \uncurry{\Conid{Un}}\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp i_2}
-  \end{array}
-\right.
-%
-\just\equiv{ Pointwise }
-%
-\left\{
-   \begin{array}{llll}
-      \ensuremath{\Varid{k}\;\underline{\Conid{X}}\mathrel{=}i_1\;()}\\
-      \ensuremath{\Varid{k}\;(\Conid{N}\;\Varid{a})\mathrel{=}\Varid{g}\comp i_2\comp i_1\;(\Varid{a})}\\
-      \ensuremath{\Varid{k}\;(\Conid{Bin}\;\Varid{o}\;\Varid{l}\;\Varid{r})\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp i_1\;(\Varid{o},(\Varid{l},\Varid{r}))}\\
-      \ensuremath{\Varid{k}\;(\Conid{Un}\;\Varid{o}\;\Varid{e})\mathrel{=}\Varid{g}\comp i_2\comp i_2\comp i_2\;(\Varid{o},\Varid{e})}
-    \end{array}
-\right.
-\qed
-\end{eqnarray}
-A partir dos cálculos e das regras de derivação é possivel chegar à seguinte definição:\\
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{sd\char95 gen}\mathbin{::}\Conid{Floating}\;\Varid{a}\Rightarrow {}\<[E]%
 \\
 \>[B]{}\hsindent{5}{}\<[5]%
 \>[5]{}()+(\Varid{a}+((\Conid{BinOp},((\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}),(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a})))+(\Conid{UnOp},(\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}))))\to (\Conid{ExpAr}\;\Varid{a},\Conid{ExpAr}\;\Varid{a}){}\<[E]%
 \\
-\>[B]{}\Varid{sd\char95 gen}\;(i_1\;())\mathrel{=}(\Conid{X},\Conid{N}\;\mathrm{1}){}\<[E]%
+\>[B]{}\Varid{sd\char95 gen}\mathrel{=}\alt{\Varid{g\char95 sd1}}{\alt{\Varid{g\char95 sd2}}{\alt{\Varid{g\char95 sd\char95 gen4}}{\Varid{g\char95 sd\char95 gen5}}}}\;\mathbf{where}{}\<[E]%
 \\
-\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_1\;\Varid{a}))\mathrel{=}(\Conid{N}\;\Varid{a},\Conid{N}\;\mathrm{0}){}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{g\char95 sd1}\;\anonymous \mathrel{=}(\Conid{X},\Conid{N}\;\mathrm{1}){}\<[E]%
 \\
-\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_2\;(i_1\;(\Conid{Sum},((\Varid{a},\Varid{b}),(\Varid{c},\Varid{d}))))))\mathrel{=}(\Conid{Bin}\;\Conid{Sum}\;\Varid{a}\;\Varid{c},\Conid{Bin}\;\Conid{Sum}\;\Varid{b}\;\Varid{d}){}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{g\char95 sd2}\;\Varid{a}\mathrel{=}(\Conid{N}\;\Varid{a},\Conid{N}\;\mathrm{0}){}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{g\char95 sd\char95 gen4}\;(\Varid{o},((\Varid{exp1},\Varid{exp2}),(\Varid{exp3},\Varid{exp4})))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Sum}\;\mathbf{then}\;(\Conid{Bin}\;\Conid{Sum}\;\Varid{exp1}\;\Varid{exp3},\Conid{Bin}\;\Conid{Sum}\;\Varid{exp2}\;\Varid{exp4}){}\<[E]%
 \\
-\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_2\;(i_1\;(\Conid{Product},((\Varid{a},\Varid{b}),(\Varid{c},\Varid{d}))))))\mathrel{=}(\Conid{Bin}\;\Conid{Product}\;\Varid{a}\;\Varid{c},\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{a}\;\Varid{d})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{b}\;\Varid{c})){}\<[E]%
+\>[B]{}\hsindent{45}{}\<[45]%
+\>[45]{}\mathbf{else}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp1}\;\Varid{exp3},\Conid{Bin}\;\Conid{Sum}\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp1}\;\Varid{exp4})\;(\Conid{Bin}\;\Conid{Product}\;\Varid{exp2}\;\Varid{exp3})){}\<[E]%
 \\
-\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_2\;(i_2\;(\Conid{Negate},(\Varid{a},\Varid{b})))))\mathrel{=}(\Conid{Un}\;\Conid{Negate}\;\Varid{a},\Conid{Un}\;\Conid{Negate}\;\Varid{b}){}\<[E]%
+\>[B]{}\Varid{g\char95 sd\char95 gen5}\;(\Varid{o},(\Varid{exp1},\Varid{exp2}))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Negate}\;\mathbf{then}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1},\Conid{Un}\;\Varid{o}\;\Varid{exp2}){}\<[E]%
 \\
-\>[B]{}\Varid{sd\char95 gen}\;(i_2\;(i_2\;(i_2\;(\Conid{E},(\Varid{a},\Varid{b})))))\mathrel{=}(\Conid{Un}\;\Conid{E}\;\Varid{a},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Conid{E}\;\Varid{a})\;\Varid{b}){}\<[E]%
+\>[B]{}\hsindent{31}{}\<[31]%
+\>[31]{}\mathbf{else}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1},\Conid{Bin}\;\Conid{Product}\;(\Conid{Un}\;\Varid{o}\;\Varid{exp1})\;\Varid{exp2}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 
@@ -1895,23 +1791,33 @@ A partir dos cálculos e das regras de derivação é possivel chegar à seguint
 }}
 \end{eqnarray*}
 
-Para calcular o valor da derivada de uma expressão nesse ponto, sem manipular a expressão original é necessário que o gene do catamorfismo
-crie um par com o valor original e o valor da derivada. Utilizando os cálculos anteriores e as regras matemáticas chega-se à definição:
+Para calcular o valor da derivada de uma expressão nesse ponto, sem manipular a expressão original através do 
+método de \emph{Automatic differentiation} temos que definir um gene do catamorfismo que crie um par com o valor original 
+e o valor da derivada no ponto. Utilizando o diagrama e as regras matemáticas chega-se à definição:
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{ad\char95 gen}\;\Varid{n}\;(i_1\;())\mathrel{=}(\Varid{n},\mathrm{1});{}\<[E]%
+\>[B]{}\Varid{ad\char95 gen}\;\Varid{d}\mathrel{=}\alt{\Varid{g\char95 ad1}}{\alt{\Varid{g\char95 ad2}}{\alt{\Varid{g\char95 ad3}}{\Varid{g\char95 ad4}}}}\;\mathbf{where}{}\<[E]%
 \\
-\>[B]{}\Varid{ad\char95 gen}\;\Varid{n}\;(i_2\;(i_1\;(\Varid{a})))\mathrel{=}(\Varid{a},\mathrm{0});{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{g\char95 ad1}\mathrel{=}\underline{(\Varid{d},\mathrm{1})}{}\<[E]%
 \\
-\>[B]{}\Varid{ad\char95 gen}\;\Varid{n}\;(i_2\;(i_2\;(i_1\;(\Conid{Product},((\Varid{a},\Varid{b}),(\Varid{c},\Varid{d}))))))\mathrel{=}((\Varid{a}\mathbin{*}\Varid{c}),(\Varid{a}\mathbin{*}\Varid{d})\mathbin{+}(\Varid{b}\mathbin{*}\Varid{c}));{}\<[E]%
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{g\char95 ad2}\;\Varid{a}\mathrel{=}(\Varid{a},\mathrm{0}){}\<[E]%
 \\
-\>[B]{}\Varid{ad\char95 gen}\;\Varid{n}\;(i_2\;(i_2\;(i_1\;(\Conid{Sum},((\Varid{a},\Varid{b}),(\Varid{c},\Varid{d}))))))\mathrel{=}(\Varid{a}\mathbin{+}\Varid{c},\Varid{b}\mathbin{+}\Varid{d});{}\<[E]%
+\>[B]{}\Varid{g\char95 ad3}\;(\Varid{o},((e_1 ,e_2 ),(\Varid{e3},\Varid{e4})))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Sum}\;\mathbf{then}\;(e_1 \mathbin{+}\Varid{e3},e_2 \mathbin{+}\Varid{e4}){}\<[E]%
 \\
-\>[B]{}\Varid{ad\char95 gen}\;\Varid{n}\;(i_2\;(i_2\;(i_2\;(\Conid{Negate},(\Varid{a},\Varid{b})))))\mathrel{=}((\mathbin{-}\mathrm{1})\mathbin{*}(\Varid{a}),(\mathbin{-}\mathrm{1})\mathbin{*}(\Varid{b}));{}\<[E]%
+\>[B]{}\hsindent{45}{}\<[45]%
+\>[45]{}\mathbf{else}\;(e_1 \mathbin{*}\Varid{e3},e_1 \mathbin{*}\Varid{e4}\mathbin{+}e_2 \mathbin{*}\Varid{e3}){}\<[E]%
 \\
-\>[B]{}\Varid{ad\char95 gen}\;\Varid{n}\;(i_2\;(i_2\;(i_2\;(\Conid{E},(\Varid{a},\Varid{b})))))\mathrel{=}((\Varid{expd}\;\Varid{a}),(\Varid{expd}\;\Varid{a})\mathbin{*}\Varid{b});{}\<[E]%
+\>[B]{}\Varid{g\char95 ad4}\;(\Varid{o},(e_1 ,e_2 ))\mathrel{=}\mathbf{if}\;\Varid{o}\equiv \Conid{Negate}\;\mathbf{then}\;(\Varid{negate}\;e_1 ,\Varid{negate}\;e_2 ){}\<[E]%
+\\
+\>[B]{}\hsindent{39}{}\<[39]%
+\>[39]{}\mathbf{else}\;(\Varid{\Conid{Prelude}.exp}\;e_1 ,(\Varid{\Conid{Prelude}.exp}\;e_1 )\mathbin{*}e_2 ){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
 

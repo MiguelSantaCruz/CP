@@ -129,11 +129,11 @@
 \begin{tabular}{ll}
 \textbf{Grupo} nr. 53
 \\\hline
-a93204 & José João Gonçalves	
+93204 & José João Gonçalves	
 \\
-a93314 & Maria Sofia Rocha Gomes	
+93314 & Maria Sofia Rocha Gomes	
 \\
-a93194 & Miguel Rodrigues Santa Cruz	
+93194 & Miguel Rodrigues Santa Cruz	
 \\
 
 \end{tabular}
@@ -1144,96 +1144,27 @@ Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catam
     |a| &  & 1 + (a + ((BinOp \times (a \times a)) + UnOp \times a))\ar[ll]^-{|g_eval_exp|}
 }}
 \end{eqnarray*}
-Para descobrir o gene |g_eval_exp| temos |k = cata g_eval_exp| sabendo |k . in = g . (id + (k >< k))| .
+Para descobrir o gene |g_eval_exp| usamos o seu tipo e as regras matemáticas.
 
 Portanto:
 
-\begin{eqnarray}
-\start
-|k . (either (const X) num_ops) = (either (g . i1) (g . i2 .(k >< k)))|
-%
-\just\equiv{ Eq-+ }
-%
-        |lcbr(
-		k . (const X) = g . i1
-	)(
-		k . num_ops = g . i2
-	)|
-%
-\just\equiv{ Def. num ops; Natural-id; Reflexão-+ }
-%
-        |lcbr(
-		k . (const X) = g . i1
-	)(
-		k . (either N ops) = g . i2 . (either i1 i2)
-	)|
-%
-\just\equiv{ Eq-+ (no segundo ramo) }
-%
-\left\{
-   \begin{array}{lll}
-      |k . (const X) = i1|\\
-      |k . N = g . i2 . i1|\\
-      |k . ops = g . i2 . i2|
-  \end{array}
-\right.
-%
-\just\equiv{ Def. ops }
-%
-\left\{
-   \begin{array}{llll}
-      |k . (const X) = i1|\\
-      |k . N = g . i2 . i1|\\
-      |k . (either bin (uncurry Un)) = g . i2 . i2 . (either i1 i2)|
-  \end{array}
-\right.
-%
-\just\equiv{ Eq-+ }
-%
-\left\{
-   \begin{array}{llll}
-      |k . (const X) = i1|\\
-      |k . N = g . i2 . i1|\\
-      |k . bin = g . i2 . i2 . i1|\\
-      |k . (uncurry Un) = g . i2 . i2 . i2|
-  \end{array}
-\right.
-%
-\just\equiv{ Pointwise }
-%
-\left\{
-   \begin{array}{llll}
-      |k (const X) = i1 ()|\\
-      |k (N a) = g . i2 . i1 (a)|\\
-      |k (Bin o l r) = g . i2 . i2 . i1 (o, (l, r))|\\
-      |k (Un o e) = g . i2 . i2 . i2 (o, e)|
-    \end{array}
-\right.
-\qed
-\end{eqnarray}
-
-A partir disto e com as regras da matemática pode definir-se o gene da seguinte forma: 
 \begin{code}
-g_eval_exp n (Left a) = n;
-g_eval_exp n (Right(Left(a))) = a;
-g_eval_exp n (Right(Right(Left(Product, (a,b))))) = a * b;
-g_eval_exp n (Right (Right (Left (Sum, (a,b))))) = a + b;
-g_eval_exp n (Right(Right(Right(Negate, b)))) = (-1) * b;
-g_eval_exp n (Right(Right(Right(E, b)))) = expd b;
-
-
+g_eval_exp e = either (const e) g_eval1 where
+    g_eval1 = either id g_eval2
+    g_eval2 = either g_eval_exp3 g_eval_exp4
+g_eval_exp3 (a,(b,c)) = if a == Product then b * c else b + c
+g_eval_exp4 (a,b) = if a == Negate then -b else Prelude.exp b
 \end{code}
 
 \vspace{1cm}
 \textbf{optimize\_eval}
 
-Para tirar proveito dos elementos absorventes de cada operação, definimos um anamorfismo 
-que não altera a estrutura de dados o que permite que o catamorfimo permaneça igual ao definido anteriormente.
+Para tirar proveito dos elementos absorventes de cada operação, definimos um hilomorfismo
+onde o anamorfismo não altera a estrutura de dados o que permite que o catamorfimo permaneça igual ao gene |g_eval_exp|.
 \begin{code}
 clean (Bin Product _ (N 0)) = outExpAr $ N 0
 clean (Bin Product (N 0) _) = outExpAr $ N 0 
 clean x = outExpAr x
-
 
 gopt a = g_eval_exp a 
 \end{code}
@@ -1254,83 +1185,21 @@ Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catam
     |ExpAr A >< ExpAr A| &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{|sd_gen|}
 }}
 \end{eqnarray*}
-Para descobrir o gene |sd_gene| temos |k = cata sd_gene| sabendo |k . in = g . (id + (k >< k))| .
+Para descobrir o gene |sd_gene| temos de usar o seu tipo e as regras de derivação conhecidas.
 
 Portanto:
 
-\begin{eqnarray}
-\start
-|k . (either (const X) num_ops) = (either (g . i1) (g . i2 .(k >< k)))|
-%
-\just\equiv{ Eq-+ }
-%
-        |lcbr(
-		k . (const X) = g . i1
-	)(
-		k . num_ops = g . i2
-	)|
-%
-\just\equiv{ Def. num ops; Natural-id; Reflexão-+ }
-%
-        |lcbr(
-		k . (const X) = g . i1
-	)(
-		k . (either N ops) = g . i2 . (either i1 i2)
-	)|
-%
-\just\equiv{ Eq-+ (no segundo ramo) }
-%
-\left\{
-   \begin{array}{lll}
-      |k . (const X) = i1|\\
-      |k . N = g . i2 . i1|\\
-      |k . ops = g . i2 . i2|
-  \end{array}
-\right.
-%
-\just\equiv{ Def. ops }
-%
-\left\{
-   \begin{array}{llll}
-      |k . (const X) = i1|\\
-      |k . N = g . i2 . i1|\\
-      |k . (either bin (uncurry Un)) = g . i2 . i2 . (either i1 i2)|
-  \end{array}
-\right.
-%
-\just\equiv{ Eq-+ }
-%
-\left\{
-   \begin{array}{llll}
-      |k . (const X) = i1|\\
-      |k . N = g . i2 . i1|\\
-      |k . bin = g . i2 . i2 . i1|\\
-      |k . (uncurry Un) = g . i2 . i2 . i2|
-  \end{array}
-\right.
-%
-\just\equiv{ Pointwise }
-%
-\left\{
-   \begin{array}{llll}
-      |k (const X) = i1 ()|\\
-      |k (N a) = g . i2 . i1 (a)|\\
-      |k (Bin o l r) = g . i2 . i2 . i1 (o, (l, r))|\\
-      |k (Un o e) = g . i2 . i2 . i2 (o, e)|
-    \end{array}
-\right.
-\qed
-\end{eqnarray}
-A partir dos cálculos e das regras de derivação é possivel chegar à seguinte definição:\\
 \begin{code}
 sd_gen :: Floating a =>
     Either () (Either a (Either (BinOp, ((ExpAr a, ExpAr a), (ExpAr a, ExpAr a))) (UnOp, (ExpAr a, ExpAr a)))) -> (ExpAr a, ExpAr a)
-sd_gen (Left ())= (X,N 1)
-sd_gen (Right (Left a))= (N a,N 0)
-sd_gen (Right (Right (Left (Sum, ((a,b),(c,d)))))) = (Bin Sum a c,Bin Sum b d)
-sd_gen (Right (Right (Left (Product, ((a,b),(c,d))))))= (Bin Product a c,Bin Sum (Bin Product a d) (Bin Product b c))
-sd_gen (Right (Right (Right (Negate, (a,b)))))= (Un Negate a,Un Negate b)
-sd_gen (Right (Right (Right (E, (a,b)))))= (Un E a,Bin Product (Un E a) b)
+sd_gen = either g_sd1 (either g_sd2 (either g_sd_gen4 g_sd_gen5)) where
+    g_sd1 _ = (X, N 1)
+    g_sd2 a = (N a, N 0)
+    
+g_sd_gen4 (o,((exp1,exp2),(exp3,exp4))) = if o == Sum then (Bin Sum exp1 exp3, Bin Sum exp2 exp4)
+                                            else (Bin Product exp1 exp3, Bin Sum (Bin Product exp1 exp4) (Bin Product exp2 exp3))
+g_sd_gen5 (o,(exp1,exp2)) = if o == Negate then (Un o exp1, Un o exp2)
+                              else (Un o exp1, Bin Product (Un o exp1) exp2)
 
 \end{code}
 
@@ -1349,16 +1218,18 @@ sd_gen (Right (Right (Right (E, (a,b)))))= (Un E a,Bin Product (Un E a) b)
 }}
 \end{eqnarray*}
 
-Para calcular o valor da derivada de uma expressão nesse ponto, sem manipular a expressão original é necessário que o gene do catamorfismo
-crie um par com o valor original e o valor da derivada. Utilizando os cálculos anteriores e as regras matemáticas chega-se à definição:
+Para calcular o valor da derivada de uma expressão nesse ponto, sem manipular a expressão original através do 
+método de \emph{Automatic differentiation} temos que definir um gene do catamorfismo que crie um par com o valor original 
+e o valor da derivada no ponto. Utilizando o diagrama e as regras matemáticas chega-se à definição:
 
 \begin{code}
-ad_gen n (Left ()) = (n,1);
-ad_gen n (Right(Left(a))) = (a,0);
-ad_gen n (Right(Right(Left(Product, ((a,b),(c,d)) )))) = ( (a*c) , (a*d) + (b*c));
-ad_gen n (Right (Right (Left (Sum, ((a,b),(c,d)) )))) = (a + c , b + d);
-ad_gen n (Right(Right(Right(Negate, (a,b) )))) = ((-1) * (a) , (-1) * (b));
-ad_gen n (Right(Right(Right(E, (a,b) )))) = ( (expd a) , (expd a) * b );
+ad_gen d = either g_ad1 (either g_ad2 (either g_ad3 g_ad4)) where
+    g_ad1 = const (d,1)
+    g_ad2 a = (a, 0)
+g_ad3 (o,((e1,e2),(e3,e4))) = if o == Sum then (e1 + e3, e2 + e4)
+                                            else (e1*e3, e1*e4 + e2*e3)
+g_ad4 (o,(e1,e2)) = if o == Negate then (negate e1, negate e2)
+                                      else (Prelude.exp e1, (Prelude.exp e1) * e2)
 \end{code}
 
 \subsection*{Problema 2}
