@@ -1885,16 +1885,62 @@ Sendo a \textit{inic} igual á inicialização das variáveis, ou seja, \textit{
 
 \subsection*{Problema 3}
 
+\paragraph{}
+Para este exercicio, começamos por desenhar o diagrama que representa este catamorfismo, pelo que
+se apresenta em seguida:
+
+
+\begin{eqnarray*}
+\xymatrix@C=2cm{
+    \ensuremath{\Conid{NPoint}}
+           \ar[d]_-{\ensuremath{\cata{\Varid{g}}\mathrel{=}\Varid{calcLine}}}
+&
+    \ensuremath{\mathrm{1}\mathbin{+}\Conid{Q}\times\Conid{NPoint}}
+           \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}\Varid{id}\times\Varid{calcLine}}}
+           \ar[l]_-{\ensuremath{\mathbf{in}}}
+\\
+     \ensuremath{\Conid{NPoint}\to (\Conid{OverTime}\;\Conid{NPoint})}
+&
+     \ensuremath{\mathrm{1}\mathbin{+}\Conid{Q}\times(\Conid{NPoint}\to \Conid{OverTime}\;\Conid{NPoint})}
+           \ar[l]^-{\ensuremath{\Varid{g}}}
+}
+\end{eqnarray*}
+
+
+Deste modo, tendo o diagrama e sabendo que calcLine é um catamorfimo de um either, temos que o seu gene é \ensuremath{\Varid{g}\mathrel{=}\alt{\Varid{g1}}{\Varid{g2}}}.
+Para g1, através da ajuda do ghci, determinamos que é do tipo \ensuremath{[\mskip1.5mu \Q \mskip1.5mu]\to \Conid{Float}\to [\mskip1.5mu \Q \mskip1.5mu]} e sabemos que para este caso
+o resultado será sempre uma lista vazia. Podemos então inferir que para quaisquer que sejam os dois argumentos, o resultado será sempre
+o mesmo: \ensuremath{\Varid{g1}\;\anonymous \;\anonymous \mathrel{=}\Varid{nil}}.
+
+Para g2, através do código fornecido nos anexos, reparamos que num trecho da função auxiliar é-nos fornecida uma função que
+se adequa ao caso do g2, sendo que temos um par que vai para o mesmo tipo do resultado deste catamorfismo: 
+\ensuremath{(\Q ,\Conid{NPoint}\to \Conid{OverTime}\;\Conid{NPoint})\to (\Conid{NPoint}\to \Conid{OverTime}\;\Conid{NPoint})}.
+Assim, recorremos a esta função para calcular g2, obtendo assim o segundo elemento do either que compõe o catamorfismo.
+
+
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{8}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{calcLine}\mathbin{::}\Conid{NPoint}\to (\Conid{NPoint}\to \Conid{OverTime}\;\Conid{NPoint}){}\<[E]%
 \\
 \>[B]{}\Varid{calcLine}\mathrel{=}\Varid{cataList}\;\Varid{h}\;\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{h}\mathrel{=}\bot {}\<[E]%
+\>[4]{}\Varid{h}\mathrel{=}\alt{\Varid{g1}}{\Varid{g2}}{}\<[E]%
+\\
+\>[B]{}\Varid{g1}\;\anonymous \;\anonymous \mathrel{=}\Varid{nil}{}\<[E]%
+\\
+\>[B]{}\Varid{g2}\;(\Varid{d},\Varid{f})\;\Varid{l}\mathrel{=}\mathbf{case}\;\Varid{l}\;\mathbf{of}{}\<[E]%
+\\
+\>[B]{}\hsindent{8}{}\<[8]%
+\>[8]{}[\mskip1.5mu \mskip1.5mu]{}\<[15]%
+\>[15]{}\to \Varid{nil}{}\<[E]%
+\\
+\>[B]{}\hsindent{8}{}\<[8]%
+\>[8]{}(\Varid{x}\mathbin{:}\Varid{xs})\to \lambda \Varid{z}\to \Varid{concat}\mathbin{\$}(\Varid{sequenceA}\;[\mskip1.5mu \Varid{singl}\comp \Varid{linear1d}\;\Varid{d}\;\Varid{x},\Varid{f}\;\Varid{xs}\mskip1.5mu])\;\Varid{z}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{deCasteljau}\mathbin{::}[\mskip1.5mu \Conid{NPoint}\mskip1.5mu]\to \Conid{OverTime}\;\Conid{NPoint}{}\<[E]%
 \\
@@ -1909,6 +1955,11 @@ Sendo a \textit{inic} igual á inicialização das variáveis, ou seja, \textit{
 \>[B]{}\Varid{hyloAlgForm}\mathrel{=}\bot {}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
+
+
+Para este caso, sabemos que teríamos que partir de que um hilomorfismo é a composição dos combinadores catamorfismo e anamorfismo,
+pelo que inicialmente se constrói a estrutura (anamorfismo) e depois se consome a estrutura criada (catamorfismo). Porém, não
+conseguimos progredir na resolução deste problema até chegar a uma solução para o mesmo.
 
 \subsection*{Problema 4}
 
@@ -1952,7 +2003,7 @@ O diagrama correspondente a este exercício traduz-se no seguinte:
 \\
      \ensuremath{\Conid{A}\times\Conid{N}}
 &
-     \ensuremath{\Conid{A}\mathbin{+}\Conid{A}\;\Varid{x}\;(\Conid{N}\times\Conid{N})}
+     \ensuremath{\Conid{A}\mathbin{+}\Conid{A}\times(\Conid{N}\times\Conid{N})}
            \ar[l]^-{\ensuremath{\Varid{g}}}
 }
 \end{eqnarray*}
@@ -2106,7 +2157,7 @@ O diagrama correspondente a este exercício traduz-se no seguinte:
            \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}\llparenthesis\, \Varid{g}\,\rrparenthesis\times\llparenthesis\, \Varid{g}\,\rrparenthesis}}
            \ar[l]_-{\ensuremath{\mathbf{in}}}
 \\
-     \ensuremath{\Conid{A}\times\Conid{Nat}}
+     \ensuremath{\Conid{A}\times\Conid{N}}
 &
      \ensuremath{\Conid{A}\mathbin{+}(\Conid{A}\times\Conid{N})\;\Varid{x}\;(\Conid{A}\times\Conid{N})}
            \ar[l]^-{\ensuremath{\Varid{g}}}
