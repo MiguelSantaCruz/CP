@@ -1323,6 +1323,8 @@ g2 (d,f) l = case l of
        []     -> nil
        (x:xs) -> \z -> concat $ (sequenceA [singl . linear1d d x, f xs]) z
 
+
+
 deCasteljau :: [NPoint] -> OverTime NPoint
 deCasteljau = hyloAlgForm alg coalg where
    coalg = undefined
@@ -1330,6 +1332,11 @@ deCasteljau = hyloAlgForm alg coalg where
 
 hyloAlgForm = undefined
 \end{code}
+
+
+Para este caso, sabemos que teríamos que partir de que um hilomorfismo é a composição dos combinadores catamorfismo e anamorfismo,
+pelo que inicialmente se constrói a estrutura (anamorfismo) e depois se consome a estrutura criada (catamorfismo). Porém, não
+conseguimos progredir na resolução deste problema até chegar a uma solução para o mesmo.
 
 \subsection*{Problema 4}
 
