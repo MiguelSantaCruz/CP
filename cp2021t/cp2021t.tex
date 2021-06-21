@@ -1679,10 +1679,10 @@ Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguint
 \centerline{\xymatrix{
    ExpAr A \ar[d]_-{\ensuremath{\cata{\Varid{g\char95 eval\char95 exp}}}}
                 \ar@/^2pc/ [rr]^-{\ensuremath{\Varid{out}}} & \qquad \cong
-&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{eval\char95 exp}\times\Varid{eval\char95 exp})\mathbin{+}\Varid{id}\times\Varid{eval\char95 exp}))}}
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{eval\char95 exp}\times\Varid{eval\char95 exp})\mathbin{+}(\Varid{id}\times\Varid{eval\char95 exp}))}}
                                      \ar@/^2pc/ [ll]^-{\ensuremath{\mathbf{in}}}
 \\
-    \ensuremath{\Varid{a}} &  & 1 + (a + ((BinOp \times (a \times a)) + UnOp \times a))\ar[ll]^-{\ensuremath{\Varid{g\char95 eval\char95 exp}}}
+    \ensuremath{\Varid{a}} &  & 1 + (a + ((BinOp \times (a \times a)) + (UnOp \times a))\ar[ll]^-{\ensuremath{\Varid{g\char95 eval\char95 exp}}}
 }}
 \end{eqnarray*}
 Para descobrir o gene \ensuremath{\Varid{g\char95 eval\char95 exp}} usamos o seu tipo e as regras matemáticas.
@@ -1740,10 +1740,10 @@ Tendo a definição de \ensuremath{\Varid{recExpAr}} é possivel obter o seguint
 \centerline{\xymatrix{
    ExpAr A \ar[d]_-{\ensuremath{\cata{\Varid{sd\char95 gen}}}}
                 \ar@/^2pc/ [rr]^-{\ensuremath{\Varid{out}}} & \qquad \cong
-&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{sd}\times\Varid{sd})\mathbin{+}\Varid{id}\times\Varid{sd}))}}
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\cata{\Varid{sd\char95 gen}}\times\cata{\Varid{sd\char95 gen}})\mathbin{+}(\Varid{id}\times\cata{\Varid{sd\char95 gen}})}}
                                      \ar@/^2pc/ [ll]^-{\ensuremath{\mathbf{in}}}
 \\
-    \ensuremath{\Conid{ExpAr}\;\Conid{A}\times\Conid{ExpAr}\;\Conid{A}} &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{\ensuremath{\Varid{sd\char95 gen}}}
+    \ensuremath{\Conid{ExpAr}\;\Conid{A}\times\Conid{ExpAr}\;\Conid{A}} &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + (UnOp \times (ExpAr A)^2))\ar[ll]^-{\ensuremath{\Varid{sd\char95 gen}}}
 }}
 \end{eqnarray*}
 Para descobrir o gene \ensuremath{\Varid{sd\char95 gene}} temos de usar o seu tipo e as regras de derivação conhecidas.
@@ -1789,10 +1789,10 @@ Portanto:
 \centerline{\xymatrix{
    ExpAr A \ar[d]_-{\ensuremath{\cata{\Varid{ad\char95 gen}}}}
                 \ar@/^2pc/ [rr]^-{\ensuremath{\Varid{out}}} & \qquad \cong
-&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\Varid{ad}\times\Varid{ad})\mathbin{+}\Varid{id}\times\Varid{ad}))}}
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{\ensuremath{\Varid{id}\mathbin{+}(\Varid{id}\mathbin{+}(\Varid{id}\times(\cata{\Varid{ad\char95 gen}}\times\cata{\Varid{ad\char95 gen}})\mathbin{+}\Varid{id}\times\cata{\Varid{ad\char95 gen}}))}}
                                      \ar@/^2pc/ [ll]^-{\ensuremath{\mathbf{in}}}
 \\
-    \ensuremath{\Conid{A}\times\Conid{A}} &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{\ensuremath{\Varid{ad\char95 gen}}}
+    \ensuremath{\Conid{A}\times\Conid{A}} &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + (UnOp \times (ExpAr A)^2))\ar[ll]^-{\ensuremath{\Varid{ad\char95 gen}}}
 }}
 \end{eqnarray*}
 

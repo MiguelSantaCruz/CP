@@ -1138,10 +1138,10 @@ Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catam
 \centerline{\xymatrix{
    ExpAr A \ar[d]_-{|cata g_eval_exp|}
                 \ar@@/^2pc/ [rr]^-{|out|} & \qquad \cong
-&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< (eval_exp >< eval_exp) + id >< eval_exp))|}
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< (eval_exp >< eval_exp) + (id >< eval_exp))|}
                                      \ar@@/^2pc/ [ll]^-{|in|}
 \\
-    |a| &  & 1 + (a + ((BinOp \times (a \times a)) + UnOp \times a))\ar[ll]^-{|g_eval_exp|}
+    |a| &  & 1 + (a + ((BinOp \times (a \times a)) + (UnOp \times a))\ar[ll]^-{|g_eval_exp|}
 }}
 \end{eqnarray*}
 Para descobrir o gene |g_eval_exp| usamos o seu tipo e as regras matemáticas.
@@ -1179,10 +1179,10 @@ Tendo a definição de |recExpAr| é possivel obter o seguinte diagrama do catam
 \centerline{\xymatrix{
    ExpAr A \ar[d]_-{|cata sd_gen|}
                 \ar@@/^2pc/ [rr]^-{|out|} & \qquad \cong
-&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< (sd >< sd) + id >< sd))|}
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< ((cata sd_gen) >< (cata sd_gen)) + (id >< (cata sd_gen))|}
                                      \ar@@/^2pc/ [ll]^-{|in|}
 \\
-    |ExpAr A >< ExpAr A| &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{|sd_gen|}
+    |ExpAr A >< ExpAr A| &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + (UnOp \times (ExpAr A)^2))\ar[ll]^-{|sd_gen|}
 }}
 \end{eqnarray*}
 Para descobrir o gene |sd_gene| temos de usar o seu tipo e as regras de derivação conhecidas.
@@ -1211,10 +1211,10 @@ g_sd_gen5 (o,(exp1,exp2)) = if o == E then (Un o exp1, Bin Product (Un o exp1) e
 \centerline{\xymatrix{
    ExpAr A \ar[d]_-{|cata ad_gen|}
                 \ar@@/^2pc/ [rr]^-{|out|} & \qquad \cong
-&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< (ad >< ad) + id >< ad))|}
+&   1 + (A + (BinOp \times (ExpAr A \times ExpAr A)) + (UnOp \times ExpAr A)) \ar[d]^{|id + (id + (id >< ((cata ad_gen) >< (cata ad_gen)) + id >< (cata ad_gen)))|}
                                      \ar@@/^2pc/ [ll]^-{|in|}
 \\
-    |A >< A| &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + UnOp \times (ExpAr A)^2))\ar[ll]^-{|ad_gen|}
+    |A >< A| &  & 1 + (A + ((BinOp \times ((ExpAr A)^2 \times (ExpAr A)^2)) + (UnOp \times (ExpAr A)^2))\ar[ll]^-{|ad_gen|}
 }}
 \end{eqnarray*}
 
